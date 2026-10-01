@@ -4,7 +4,7 @@ import 'core/theme/app_theme.dart';
 import 'providers/sobriety_provider.dart';
 import 'providers/check_in_provider.dart';
 import 'providers/community_provider.dart';
-import 'screens/main_navigation_screen.dart';
+import 'screens/onboarding/onboarding_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,7 @@ class SoberOneApp extends StatelessWidget {
         themeMode: ThemeMode.dark,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        home: const MainNavigationScreen(),
+        home: const OnboardingScreen(),
       ),
     );
   }
