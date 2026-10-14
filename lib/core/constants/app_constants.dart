@@ -26,22 +26,12 @@ class AppConstants {
     'Anxiety',
   ];
 
-  // Emergency Helplines / Resources
-  static const List<Map<String, String>> emergencyHotlines = [
-    {
-      'title': 'SAMHSA National Helpline',
-      'number': '1-800-662-4357',
-      'description': 'Free, confidential, 24/7 treatment referral & information',
-    },
-    {
-      'title': 'Suicide & Crisis Lifeline',
-      'number': '988',
-      'description': 'Free 24/7 support for mental distress or crisis',
-    },
-    {
-      'title': 'Crisis Text Line',
-      'number': 'Text HOME to 741741',
-      'description': 'Free 24/7 crisis support via SMS text',
-    },
-  ];
+  // Centralized Crisis Contact — exactly ONE verified national helpline.
+  // SAFETY RULE: This constant may ONLY be displayed on the Support page.
+  // Do NOT reference this from onboarding, progress, community, or craving-tracker screens.
+  static const Map<String, String> nationalHelpline = {
+    'title': 'SAMHSA National Helpline',
+    'number': '1-800-662-4357',
+    'description': 'Free, confidential, 24/7 treatment referral & information.',
+  };
 }

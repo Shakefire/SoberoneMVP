@@ -33,7 +33,7 @@ extension MoodLevelExtension on MoodLevel {
       case MoodLevel.low:
         return '😔';
       case MoodLevel.struggling:
-        return '⛈️';
+        return '🌧️';
     }
   }
 

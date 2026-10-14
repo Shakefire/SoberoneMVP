@@ -25,7 +25,7 @@ class SoberOneApp extends StatelessWidget {
       child: MaterialApp(
         title: 'SoberOne',
         debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         home: const OnboardingScreen(),

@@ -19,6 +19,8 @@ class SobrietyProfile {
 
   Duration get elapsedDuration => DateTime.now().difference(quitDate);
 
+  List<String> get substances => [habitName];
+
   int get elapsedDays => elapsedDuration.inDays;
 
   double get totalMoneySaved {

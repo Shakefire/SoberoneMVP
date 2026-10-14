@@ -12,6 +12,16 @@ class AppColors {
   static const Color danger = Color(0xFFFF4757); // Coral Red for SOS & triggers
   static const Color success = Color(0xFF2ED573);
 
+  // Light-Mode Onboarding & Component System Palette (High Contrast)
+  static const Color softSurfaceGray = Color(0xFFF8FAFC);
+  static const Color primaryBlue = Color(0xFF0C3C60);
+  static const Color slateText = Color(0xFF334155); // Slate Text (#334155)
+  static const Color slateMuted = Color(0xFF64748B);
+  static const Color accentCyan = Color(0xFF31C1D7); // Accent Cyan (#31C1D7)
+  static const Color baseWhite = Color(0xFFFFFFFF);
+  static const Color borderLightGray = Color(0xFFCBD5E1); // Crisp, defined border
+  static const Color cardSelectedBg = Color(0xFFEFF9FB);
+
   // Backgrounds & Surfaces (Dark Theme Default for modern mindfulness apps)
   static const Color backgroundDark = Color(0xFF0B132B); // Deepest Midnight
   static const Color surfaceDark = Color(0xFF1C2541); // Card Surface

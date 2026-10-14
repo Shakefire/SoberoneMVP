@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/constants/app_constants.dart';
 
 class SosPanicSheet extends StatefulWidget {
   const SosPanicSheet({super.key});
@@ -110,15 +109,21 @@ class _SosPanicSheetState extends State<SosPanicSheet>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
 
     return Container(
       height: size.height * 0.88,
       decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
+        color: AppColors.baseWhite,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        border: Border.all(color: AppColors.borderDark, width: 1),
+        border: Border.all(color: AppColors.borderLightGray, width: 1.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x1A0C3C60),
+            blurRadius: 28,
+            offset: Offset(0, -6),
+          ),
+        ],
       ),
       child: Column(
         children: [
@@ -128,7 +133,7 @@ class _SosPanicSheetState extends State<SosPanicSheet>
             width: 44,
             height: 5,
             decoration: BoxDecoration(
-              color: Colors.white24,
+              color: AppColors.borderLightGray,
               borderRadius: BorderRadius.circular(10),
             ),
           ),
@@ -143,29 +148,33 @@ class _SosPanicSheetState extends State<SosPanicSheet>
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: AppColors.danger.withAlpha(30),
+                        color: AppColors.danger.withValues(alpha: 0.12),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
-                        Icons.shield_outlined,
+                        Icons.shield_rounded,
                         color: AppColors.danger,
                         size: 22,
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Craving SOS Toolkit',
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.primaryBlue,
+                            letterSpacing: -0.3,
                           ),
                         ),
                         Text(
                           'This wave will pass. Take control.',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: AppColors.textSecondaryDark,
+                          style: TextStyle(
+                            fontSize: 12.5,
+                            color: AppColors.slateMuted,
                           ),
                         ),
                       ],
@@ -174,7 +183,7 @@ class _SosPanicSheetState extends State<SosPanicSheet>
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close_rounded),
+                  icon: const Icon(Icons.close_rounded, color: AppColors.slateText),
                 ),
               ],
             ),
@@ -186,14 +195,15 @@ class _SosPanicSheetState extends State<SosPanicSheet>
             margin: const EdgeInsets.symmetric(horizontal: 20),
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
-              color: AppColors.surfaceDark,
+              color: const Color(0xFFF1F5F9),
               borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppColors.borderLightGray, width: 1),
             ),
             child: Row(
               children: [
-                _buildTabButton(0, '4-7-8 Breathing', Icons.air_rounded),
-                _buildTabButton(1, '5-4-3-2-1 Grounding', Icons.spa_rounded),
-                _buildTabButton(2, 'Hotlines', Icons.phone_in_talk_rounded),
+                _buildTabButton(0, 'Breathing'),
+                _buildTabButton(1, 'Sensory'),
+                _buildTabButton(2, 'More'),
               ],
             ),
           ),
@@ -204,10 +214,10 @@ class _SosPanicSheetState extends State<SosPanicSheet>
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 250),
               child: _selectedTab == 0
-                  ? _buildBreathingTab(theme)
+                  ? _buildBreathingTab()
                   : _selectedTab == 1
-                      ? _buildGroundingTab(theme)
-                      : _buildHotlinesTab(theme),
+                      ? _buildGroundingTab()
+                      : _buildMoreHelpTab(),
             ),
           ),
         ],
@@ -215,7 +225,7 @@ class _SosPanicSheetState extends State<SosPanicSheet>
     );
   }
 
-  Widget _buildTabButton(int index, String label, IconData icon) {
+  Widget _buildTabButton(int index, String label) {
     final isSelected = _selectedTab == index;
     return Expanded(
       child: GestureDetector(
@@ -228,49 +238,46 @@ class _SosPanicSheetState extends State<SosPanicSheet>
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : Colors.transparent,
+            color: isSelected ? AppColors.primaryBlue : Colors.transparent,
             borderRadius: BorderRadius.circular(10),
+            boxShadow: isSelected
+                ? const [
+                    BoxShadow(
+                      color: Color(0x180C3C60),
+                      blurRadius: 6,
+                      offset: Offset(0, 2),
+                    ),
+                  ]
+                : null,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 16,
-                color: isSelected ? Colors.white : AppColors.textSecondaryDark,
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                color: isSelected ? Colors.white : AppColors.slateMuted,
               ),
-              const SizedBox(width: 6),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                    color: isSelected ? Colors.white : AppColors.textSecondaryDark,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildBreathingTab(ThemeData theme) {
+  Widget _buildBreathingTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         children: [
           const SizedBox(height: 16),
-          Text(
+          const Text(
             'The 4-7-8 technique stimulates the parasympathetic nervous system, lowering acute cortisol and craving intensity within 90 seconds.',
             textAlign: TextAlign.center,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: AppColors.textSecondaryDark,
-              height: 1.4,
+            style: TextStyle(
+              fontSize: 13.5,
+              color: AppColors.slateText,
+              height: 1.45,
             ),
           ),
           const SizedBox(height: 32),
@@ -289,8 +296,8 @@ class _SosPanicSheetState extends State<SosPanicSheet>
                       shape: BoxShape.circle,
                       gradient: RadialGradient(
                         colors: [
-                          AppColors.primary.withAlpha(50),
-                          AppColors.secondary.withAlpha(20),
+                          AppColors.accentCyan.withValues(alpha: 0.22),
+                          AppColors.primaryBlue.withValues(alpha: 0.08),
                           Colors.transparent,
                         ],
                       ),
@@ -302,22 +309,28 @@ class _SosPanicSheetState extends State<SosPanicSheet>
                   height: 170,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColors.surfaceDark,
+                    color: AppColors.cardSelectedBg,
                     border: Border.all(
                       color: _isBreathingActive
-                          ? AppColors.primary
-                          : AppColors.borderDark,
-                      width: 3,
+                          ? AppColors.accentCyan
+                          : AppColors.borderLightGray,
+                      width: 3.5,
                     ),
                     boxShadow: _isBreathingActive
                         ? [
                             BoxShadow(
-                              color: AppColors.primary.withAlpha(80),
+                              color: AppColors.accentCyan.withValues(alpha: 0.35),
                               blurRadius: 24,
                               spreadRadius: 4,
                             ),
                           ]
-                        : null,
+                        : const [
+                            BoxShadow(
+                              color: Color(0x080C3C60),
+                              blurRadius: 16,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -325,9 +338,9 @@ class _SosPanicSheetState extends State<SosPanicSheet>
                       Text(
                         _isBreathingActive ? '$_remainingSeconds' : '4-7-8',
                         style: const TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          fontSize: 44,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.primaryBlue,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -336,10 +349,10 @@ class _SosPanicSheetState extends State<SosPanicSheet>
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 13,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
                           color: _isBreathingActive
-                              ? AppColors.primaryLight
-                              : AppColors.textSecondaryDark,
+                              ? AppColors.accentCyan
+                              : AppColors.slateMuted,
                         ),
                       ),
                     ],
@@ -353,9 +366,9 @@ class _SosPanicSheetState extends State<SosPanicSheet>
           Text(
             'Cycles completed: $_cyclesCompleted',
             style: const TextStyle(
-              color: AppColors.textMutedDark,
+              color: AppColors.slateMuted,
               fontSize: 13,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 24),
@@ -363,13 +376,18 @@ class _SosPanicSheetState extends State<SosPanicSheet>
           // Control Button
           SizedBox(
             width: double.infinity,
+            height: 52,
             child: ElevatedButton.icon(
               onPressed: _isBreathingActive ? _stopBreathing : _startBreathingCycle,
               icon: Icon(_isBreathingActive ? Icons.stop_rounded : Icons.play_arrow_rounded),
               label: Text(_isBreathingActive ? 'Pause Exercise' : 'Start 4-7-8 Breathing'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: _isBreathingActive ? AppColors.danger : AppColors.primary,
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                backgroundColor: _isBreathingActive ? AppColors.danger : AppColors.primaryBlue,
+                foregroundColor: AppColors.baseWhite,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                elevation: 0,
               ),
             ),
           ),
@@ -379,7 +397,7 @@ class _SosPanicSheetState extends State<SosPanicSheet>
     );
   }
 
-  Widget _buildGroundingTab(ThemeData theme) {
+  Widget _buildGroundingTab() {
     final steps = [
       {'num': '5', 'title': 'See', 'desc': 'Look around and name 5 distinct things you see right now.'},
       {'num': '4', 'title': 'Feel', 'desc': 'Notice 4 physical textures (your clothes, chair, watch, floor).'},
@@ -391,17 +409,21 @@ class _SosPanicSheetState extends State<SosPanicSheet>
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       children: [
-        Text(
+        const Text(
           'The 5-4-3-2-1 Sensory Grounding',
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w800,
+            color: AppColors.primaryBlue,
+            letterSpacing: -0.3,
           ),
         ),
         const SizedBox(height: 4),
-        Text(
+        const Text(
           'Engaging all 5 senses anchors your mind in reality, breaking craving loops.',
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: AppColors.textSecondaryDark,
+          style: TextStyle(
+            fontSize: 13,
+            color: AppColors.slateMuted,
           ),
         ),
         const SizedBox(height: 16),
@@ -410,9 +432,16 @@ class _SosPanicSheetState extends State<SosPanicSheet>
             margin: const EdgeInsets.only(bottom: 12),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.surfaceDark,
+              color: AppColors.baseWhite,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.borderDark),
+              border: Border.all(color: AppColors.borderLightGray, width: 1.5),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x060C3C60),
+                  blurRadius: 10,
+                  offset: Offset(0, 3),
+                ),
+              ],
             ),
             child: Row(
               children: [
@@ -420,16 +449,19 @@ class _SosPanicSheetState extends State<SosPanicSheet>
                   width: 42,
                   height: 42,
                   decoration: BoxDecoration(
-                    color: AppColors.secondary.withAlpha(40),
+                    color: AppColors.cardSelectedBg,
                     shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.accentCyan.withValues(alpha: 0.35),
+                    ),
                   ),
                   alignment: Alignment.center,
                   child: Text(
                     step['num']!,
                     style: const TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.secondary,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.accentCyan,
                     ),
                   ),
                 ),
@@ -441,8 +473,9 @@ class _SosPanicSheetState extends State<SosPanicSheet>
                       Text(
                         step['title']!,
                         style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 15.5,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.primaryBlue,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -450,7 +483,7 @@ class _SosPanicSheetState extends State<SosPanicSheet>
                         step['desc']!,
                         style: const TextStyle(
                           fontSize: 13,
-                          color: AppColors.textSecondaryDark,
+                          color: AppColors.slateText,
                         ),
                       ),
                     ],
@@ -465,102 +498,67 @@ class _SosPanicSheetState extends State<SosPanicSheet>
     );
   }
 
-  Widget _buildHotlinesTab(ThemeData theme) {
+  // SAFETY: No crisis phone numbers here. All crisis contacts live exclusively on the Support page.
+  Widget _buildMoreHelpTab() {
+    final tips = [
+      ('🚶', 'Go for a 10-minute walk', 'Physical movement rapidly reduces craving intensity.'),
+      ('🧊', 'Hold ice in your hand', 'Cold sensation interrupts the urge signal in your brain.'),
+      ('📞', 'Call someone you trust', 'Even a short chat shifts your focus and eases isolation.'),
+      ('📝', 'Write it out', 'Journal the craving as if you are an outside observer watching it pass.'),
+      ('🎵', 'Play your recovery playlist', 'Music you associate with strength anchors positive emotion.'),
+    ];
+
     return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
       children: [
-        Text(
-          'Free & Confidential Crisis Support',
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
+        const Text(
+          'More Coping Tools',
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w800,
+            color: AppColors.primaryBlue,
+            letterSpacing: -0.3,
           ),
         ),
         const SizedBox(height: 4),
-        Text(
-          'You are never alone. Professional counselors are available 24 hours a day, 365 days a year.',
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: AppColors.textSecondaryDark,
-          ),
+        const Text(
+          'Quick evidence-based actions to ride out this wave.',
+          style: TextStyle(fontSize: 13, color: AppColors.slateMuted),
         ),
         const SizedBox(height: 16),
-        ...AppConstants.emergencyHotlines.map((hotline) {
+        ...tips.map((tip) {
           return Container(
-            margin: const EdgeInsets.only(bottom: 14),
-            padding: const EdgeInsets.all(18),
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: AppColors.surfaceDark,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.borderDark),
+              color: AppColors.baseWhite,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppColors.borderLightGray, width: 1.2),
             ),
-            child: Column(
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        hotline['title']!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.success.withAlpha(30),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Text(
-                        '24/7 Available',
-                        style: TextStyle(
-                          color: AppColors.success,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  hotline['description']!,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: AppColors.textSecondaryDark,
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceDarkLight.withAlpha(80),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Text(tip.$1, style: const TextStyle(fontSize: 22)),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.phone_rounded, color: AppColors.primary, size: 18),
-                          const SizedBox(width: 8),
-                          Text(
-                            hotline['number']!,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        tip.$2,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.primaryBlue,
+                        ),
                       ),
-                      const Text(
-                        'Tap to dial',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.textMutedDark,
+                      const SizedBox(height: 3),
+                      Text(
+                        tip.$3,
+                        style: const TextStyle(
+                          fontSize: 12.5,
+                          color: AppColors.slateMuted,
+                          height: 1.3,
                         ),
                       ),
                     ],
@@ -570,7 +568,53 @@ class _SosPanicSheetState extends State<SosPanicSheet>
             ),
           );
         }),
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
+        // Soft redirect — no phone numbers, just navigation cue
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.cardSelectedBg,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: AppColors.accentCyan.withValues(alpha: 0.4),
+              width: 1.2,
+            ),
+          ),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.health_and_safety_rounded,
+                color: AppColors.accentCyan,
+                size: 22,
+              ),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Need professional support?',
+                      style: TextStyle(
+                        fontSize: 13.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryBlue,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      'Close this and open the Support tab to connect with a specialist or the National Helpline.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: AppColors.slateMuted,
+                        height: 1.3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

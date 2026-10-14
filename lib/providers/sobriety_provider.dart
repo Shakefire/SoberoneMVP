@@ -147,4 +147,105 @@ class SobrietyProvider extends ChangeNotifier {
     }
     return null;
   }
+
+  // ─────────────────────────────────────────────────────────────
+  // Professional Certification & Rewards State
+  // ─────────────────────────────────────────────────────────────
+  bool _isPledgedForCertification = false;
+  String _pledgedMilestone = 'Day 90';
+  String? _beforePhotoPath;
+  DateTime? _pledgeDate;
+  bool _isCertificationReady = false;
+  bool _isQuizCompleted = false;
+  String? _afterPhotoPath;
+  bool _isAssessmentPassed = false;
+  final List<RewardApplication> _rewardApplications = [
+    const RewardApplication(
+      id: 'app_1',
+      grantTitle: 'Small Business Capital',
+      amount: '₦500,000',
+      submissionDate: 'Oct 01, 2026',
+      status: 'Under Review',
+    ),
+  ];
+
+  bool get isPledgedForCertification => _isPledgedForCertification;
+  String get pledgedMilestone => _pledgedMilestone;
+  String? get beforePhotoPath => _beforePhotoPath;
+  DateTime? get pledgeDate => _pledgeDate;
+  bool get isCertificationReady =>
+      _isCertificationReady || (_isPledgedForCertification && _profile.elapsedDays >= 90);
+  bool get isQuizCompleted => _isQuizCompleted;
+  String? get afterPhotoPath => _afterPhotoPath;
+  bool get isAssessmentPassed => _isAssessmentPassed;
+  List<RewardApplication> get rewardApplications =>
+      List.unmodifiable(_rewardApplications);
+
+  void pledgeCertification({
+    required String milestone,
+    required String photoPath,
+  }) {
+    _isPledgedForCertification = true;
+    _pledgedMilestone = milestone;
+    _beforePhotoPath = photoPath;
+    _pledgeDate = DateTime.now();
+    // For immediate rich preview/testing convenience, enable certification ready
+    _isCertificationReady = true;
+    notifyListeners();
+    _saveToPrefs();
+  }
+
+  void setCertificationReady(bool ready) {
+    _isCertificationReady = ready;
+    notifyListeners();
+  }
+
+  void completeQuiz({required String afterPhotoPath}) {
+    _isQuizCompleted = true;
+    _afterPhotoPath = afterPhotoPath;
+    notifyListeners();
+    _saveToPrefs();
+  }
+
+  void passAssessment() {
+    _isAssessmentPassed = true;
+    notifyListeners();
+    _saveToPrefs();
+  }
+
+  void submitRewardApplication({
+    required String grantTitle,
+    required String amount,
+  }) {
+    final now = DateTime.now();
+    final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    final dateStr = '${months[now.month - 1]} ${now.day.toString().padLeft(2, '0')}, ${now.year}';
+    _rewardApplications.insert(
+      0,
+      RewardApplication(
+        id: 'app_${DateTime.now().millisecondsSinceEpoch}',
+        grantTitle: grantTitle,
+        amount: amount,
+        submissionDate: dateStr,
+        status: 'Pending',
+      ),
+    );
+    notifyListeners();
+  }
+}
+
+class RewardApplication {
+  final String id;
+  final String grantTitle;
+  final String amount;
+  final String submissionDate;
+  final String status; // 'Pending', 'Under Review', 'Approved'
+
+  const RewardApplication({
+    required this.id,
+    required this.grantTitle,
+    required this.amount,
+    required this.submissionDate,
+    required this.status,
+  });
 }

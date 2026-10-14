@@ -18,9 +18,16 @@ class NextMilestoneCard extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColors.surfaceDark,
+          color: AppColors.baseWhite,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.borderDark),
+          border: Border.all(color: AppColors.borderLightGray, width: 1.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x060C3C60),
+              blurRadius: 12,
+              offset: Offset(0, 3),
+            ),
+          ],
         ),
         child: const Row(
           children: [
@@ -29,7 +36,11 @@ class NextMilestoneCard extends StatelessWidget {
             Expanded(
               child: Text(
                 'All major core milestones achieved! You are a true inspiration.',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primaryBlue,
+                ),
               ),
             ),
           ],
@@ -45,9 +56,16 @@ class NextMilestoneCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
+        color: AppColors.baseWhite,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.borderDark),
+        border: Border.all(color: AppColors.borderLightGray, width: 1.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x060C3C60),
+            blurRadius: 12,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +75,7 @@ class NextMilestoneCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: milestone!.accentColor.withAlpha(35),
+                  color: milestone!.accentColor.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -71,12 +89,12 @@ class NextMilestoneCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Next Milestone',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textSecondaryDark,
+                        color: AppColors.slateMuted,
                         letterSpacing: 0.5,
                       ),
                     ),
@@ -85,7 +103,9 @@ class NextMilestoneCard extends StatelessWidget {
                       milestone!.title,
                       style: const TextStyle(
                         fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.primaryBlue,
+                        letterSpacing: -0.3,
                       ),
                     ),
                   ],
@@ -109,7 +129,7 @@ class NextMilestoneCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: progress,
               minHeight: 8,
-              backgroundColor: Colors.white10,
+              backgroundColor: const Color(0xFFF1F5F9),
               valueColor: AlwaysStoppedAnimation<Color>(milestone!.accentColor),
             ),
           ),
@@ -118,23 +138,26 @@ class NextMilestoneCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                milestone!.description,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textMutedDark,
+              Expanded(
+                child: Text(
+                  milestone!.description,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.slateMuted,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
+              const SizedBox(width: 8),
               Text(
                 remainingDays > 0
                     ? '$remainingDays d ${remainingHours}h to go'
                     : '$remainingHours hours to go',
                 style: const TextStyle(
                   fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textSecondaryDark,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primaryBlue,
                 ),
               ),
             ],

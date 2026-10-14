@@ -1,3 +1,17 @@
+class CommunityComment {
+  final String authorName;
+  final String text;
+  int heartCount;
+  bool isHearted;
+
+  CommunityComment({
+    required this.authorName,
+    required this.text,
+    this.heartCount = 0,
+    this.isHearted = false,
+  });
+}
+
 class CommunityPost {
   final String id;
   final String authorName;
@@ -8,6 +22,8 @@ class CommunityPost {
   int cheerCount;
   bool isCheered;
   final String? milestoneBadge;
+  final String? imageUrl;
+  final List<CommunityComment> comments;
 
   CommunityPost({
     required this.id,
@@ -19,12 +35,14 @@ class CommunityPost {
     this.cheerCount = 0,
     this.isCheered = false,
     this.milestoneBadge,
+    this.imageUrl,
+    this.comments = const [],
   });
 
   static List<CommunityPost> get initialPosts => [
     CommunityPost(
       id: 'post_1',
-      authorName: 'Alex M.',
+      authorName: 'Alex M. 🌟',
       avatarInitials: 'AM',
       daysSober: 30,
       timeAgo: '12m ago',
@@ -33,10 +51,18 @@ class CommunityPost {
       cheerCount: 42,
       isCheered: false,
       milestoneBadge: '1 Month Champion',
+      imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+      comments: [
+        CommunityComment(
+          authorName: 'Marcus L. 🤝',
+          text: 'Proud of you Alex! Day 30 was a huge turning point for me too.',
+          heartCount: 5,
+        ),
+      ],
     ),
     CommunityPost(
       id: 'post_2',
-      authorName: 'Sarah K.',
+      authorName: 'Sarah K. 🌿',
       avatarInitials: 'SK',
       daysSober: 7,
       timeAgo: '1h ago',
@@ -45,10 +71,17 @@ class CommunityPost {
       cheerCount: 28,
       isCheered: true,
       milestoneBadge: '1 Week Victorious',
+      comments: [
+        CommunityComment(
+          authorName: 'Jessica B. ✨',
+          text: 'The morning clarity never gets old. Celebrate this win today!',
+          heartCount: 3,
+        ),
+      ],
     ),
     CommunityPost(
       id: 'post_3',
-      authorName: 'David R.',
+      authorName: 'David R. ⛺',
       avatarInitials: 'DR',
       daysSober: 92,
       timeAgo: '3h ago',
@@ -57,10 +90,18 @@ class CommunityPost {
       cheerCount: 89,
       isCheered: false,
       milestoneBadge: '90 Days Reborn',
+      imageUrl: 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=800&q=80',
+      comments: [
+        CommunityComment(
+          authorName: 'Carlos M. 🏕️',
+          text: 'Have the best time with your daughter! That is what it is all about.',
+          heartCount: 8,
+        ),
+      ],
     ),
     CommunityPost(
       id: 'post_4',
-      authorName: 'Elena V.',
+      authorName: 'Elena V. 💫',
       avatarInitials: 'EV',
       daysSober: 14,
       timeAgo: '5h ago',
@@ -68,6 +109,13 @@ class CommunityPost {
           'Struggled a bit tonight at a dinner party, but stepped into the hallway, did a 3-minute check-in on SoberOne, and ordered sparkling water with lime. You are stronger than your impulses!',
       cheerCount: 35,
       isCheered: false,
+      comments: [
+        CommunityComment(
+          authorName: 'Rachel T. 👏',
+          text: 'That hallway step is such a pro-move. Way to protect your peace!',
+          heartCount: 4,
+        ),
+      ],
     ),
   ];
 }

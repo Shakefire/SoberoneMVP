@@ -24,33 +24,70 @@ class ProfileScreen extends StatelessWidget {
         return StatefulBuilder(
           builder: (ctx, setDialogState) {
             return AlertDialog(
-              backgroundColor: AppColors.surfaceDark,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-              title: const Text('Edit Tracker Settings', style: TextStyle(fontWeight: FontWeight.bold)),
+              backgroundColor: AppColors.baseWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+                side: const BorderSide(color: AppColors.borderLightGray),
+              ),
+              title: const Text(
+                'Edit Tracker Settings',
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.primaryBlue,
+                ),
+              ),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Target Habit / Substance', style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark)),
+                    const Text(
+                      'Target Habit / Substance',
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryBlue,
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     DropdownButtonFormField<String>(
-                      initialValue: AppConstants.habitCategories.contains(selectedHabit) ? selectedHabit : AppConstants.habitCategories.first,
+                      initialValue: AppConstants.habitCategories
+                              .contains(selectedHabit)
+                          ? selectedHabit
+                          : AppConstants.habitCategories.first,
                       items: AppConstants.habitCategories.map((h) {
                         return DropdownMenuItem(value: h, child: Text(h));
                       }).toList(),
                       onChanged: (val) {
-                        if (val != null) setDialogState(() => selectedHabit = val);
+                        if (val != null) {
+                          setDialogState(() => selectedHabit = val);
+                        }
                       },
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: AppColors.backgroundDark,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                        fillColor: AppColors.softSurfaceGray,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: const BorderSide(
+                              color: AppColors.borderLightGray),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: const BorderSide(
+                              color: AppColors.borderLightGray),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
 
-                    const Text('Quit Date & Time', style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark)),
+                    const Text(
+                      'Quit Date & Time',
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryBlue,
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     InkWell(
                       onTap: () async {
@@ -63,7 +100,8 @@ class ProfileScreen extends StatelessWidget {
                         if (pickedDate != null && ctx.mounted) {
                           final pickedTime = await showTimePicker(
                             context: ctx,
-                            initialTime: TimeOfDay.fromDateTime(selectedDate),
+                            initialTime:
+                                TimeOfDay.fromDateTime(selectedDate),
                           );
                           if (pickedTime != null) {
                             setDialogState(() {
@@ -79,61 +117,129 @@ class ProfileScreen extends StatelessWidget {
                         }
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 12),
                         decoration: BoxDecoration(
-                          color: AppColors.backgroundDark,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: AppColors.borderDark),
+                          color: AppColors.softSurfaceGray,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                              color: AppColors.borderLightGray),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(TimeFormatter.formatDateTime(selectedDate)),
-                            const Icon(Icons.calendar_today_rounded, size: 18, color: AppColors.primary),
+                            Text(
+                              TimeFormatter.formatDateTime(selectedDate),
+                              style: const TextStyle(
+                                  color: AppColors.slateText,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            const Icon(Icons.calendar_today_rounded,
+                                size: 18, color: AppColors.accentCyan),
                           ],
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
 
-                    const Text('Estimated Daily Cost Saved (\$)', style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark)),
+                    const Text(
+                      'Estimated Daily Cost Saved (\$)',
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryBlue,
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     TextField(
                       controller: costController,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true),
+                      style: const TextStyle(
+                          color: AppColors.slateText,
+                          fontWeight: FontWeight.w600),
                       decoration: InputDecoration(
                         prefixText: '\$ ',
                         filled: true,
-                        fillColor: AppColors.backgroundDark,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                        fillColor: AppColors.softSurfaceGray,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: const BorderSide(
+                              color: AppColors.borderLightGray),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: const BorderSide(
+                              color: AppColors.borderLightGray),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
 
-                    const Text('Estimated Daily Hours Reclaimed', style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark)),
+                    const Text(
+                      'Estimated Daily Hours Reclaimed',
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryBlue,
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     TextField(
                       controller: hoursController,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true),
+                      style: const TextStyle(
+                          color: AppColors.slateText,
+                          fontWeight: FontWeight.w600),
                       decoration: InputDecoration(
                         suffixText: 'hrs / day',
                         filled: true,
-                        fillColor: AppColors.backgroundDark,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                        fillColor: AppColors.softSurfaceGray,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: const BorderSide(
+                              color: AppColors.borderLightGray),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: const BorderSide(
+                              color: AppColors.borderLightGray),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
 
-                    const Text('My "Why" (Core Motivation)', style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark)),
+                    const Text(
+                      'My "Why" (Core Motivation)',
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryBlue,
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     TextField(
                       controller: reasonController,
                       maxLines: 2,
+                      style: const TextStyle(color: AppColors.slateText),
                       decoration: InputDecoration(
-                        hintText: 'e.g. For my children, my health, and clarity',
+                        hintText:
+                            'e.g. For my children, my health, and clarity',
+                        hintStyle:
+                            const TextStyle(color: AppColors.slateMuted),
                         filled: true,
-                        fillColor: AppColors.backgroundDark,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                        fillColor: AppColors.softSurfaceGray,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: const BorderSide(
+                              color: AppColors.borderLightGray),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: const BorderSide(
+                              color: AppColors.borderLightGray),
+                        ),
                       ),
                     ),
                   ],
@@ -142,12 +248,18 @@ class ProfileScreen extends StatelessWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(ctx),
+                  style: TextButton.styleFrom(
+                      foregroundColor: AppColors.slateMuted),
                   child: const Text('Cancel'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    final cost = double.tryParse(costController.text.trim()) ?? profile.dailyCost;
-                    final hours = double.tryParse(hoursController.text.trim()) ?? profile.dailyHoursSaved;
+                    final cost =
+                        double.tryParse(costController.text.trim()) ??
+                            profile.dailyCost;
+                    final hours =
+                        double.tryParse(hoursController.text.trim()) ??
+                            profile.dailyHoursSaved;
                     sobriety.updateProfile(
                       habitName: selectedHabit,
                       quitDate: selectedDate,
@@ -157,6 +269,13 @@ class ProfileScreen extends StatelessWidget {
                     );
                     Navigator.pop(ctx);
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryBlue,
+                    foregroundColor: AppColors.baseWhite,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   child: const Text('Save Changes'),
                 ),
               ],
@@ -174,13 +293,23 @@ class ProfileScreen extends StatelessWidget {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          backgroundColor: AppColors.surfaceDark,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          backgroundColor: AppColors.baseWhite,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+            side: const BorderSide(color: AppColors.borderLightGray),
+          ),
           title: const Row(
             children: [
-              Icon(Icons.restart_alt_rounded, color: AppColors.warning, size: 28),
+              Icon(Icons.restart_alt_rounded,
+                  color: AppColors.danger, size: 28),
               SizedBox(width: 10),
-              Text('Reset Streak?'),
+              Text(
+                'Reset Streak?',
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.primaryBlue,
+                ),
+              ),
             ],
           ),
           content: const Column(
@@ -189,18 +318,28 @@ class ProfileScreen extends StatelessWidget {
             children: [
               Text(
                 'Remember: A slip is never a failure, it is information.',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: AppColors.primaryBlue,
+                ),
               ),
               SizedBox(height: 8),
               Text(
                 'Every day you were sober cannot be taken away from you. Resetting simply marks the starting point for your next chapter.',
-                style: TextStyle(fontSize: 13, color: AppColors.textSecondaryDark, height: 1.4),
+                style: TextStyle(
+                  fontSize: 13,
+                  color: AppColors.slateText,
+                  height: 1.45,
+                ),
               ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
+              style:
+                  TextButton.styleFrom(foregroundColor: AppColors.slateMuted),
               child: const Text('Keep Current Streak'),
             ),
             ElevatedButton(
@@ -209,11 +348,19 @@ class ProfileScreen extends StatelessWidget {
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Streak reset. We stand with you today — Day 1 begins now.'),
+                    backgroundColor: AppColors.primaryBlue,
+                    content: Text(
+                        'Streak reset. We stand with you today — Day 1 begins now.'),
                   ),
                 );
               },
-              style: ElevatedButton.styleFrom(backgroundColor: AppColors.danger),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.danger,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
               child: const Text('Reset to Now'),
             ),
           ],
@@ -235,12 +382,20 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
         children: [
           // Profile Hero Card
+          // Profile Hero Card
           Container(
             padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
-              color: AppColors.surfaceDark,
+              color: AppColors.baseWhite,
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: AppColors.borderDark),
+              border: Border.all(color: AppColors.borderLightGray, width: 1.5),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x060C3C60),
+                  blurRadius: 12,
+                  offset: Offset(0, 3),
+                ),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,10 +406,11 @@ class ProfileScreen extends StatelessWidget {
                       width: 54,
                       height: 54,
                       decoration: BoxDecoration(
-                        gradient: AppColors.primaryGradient,
+                        color: AppColors.accentCyan.withValues(alpha: 0.15),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.person_rounded, color: Colors.white, size: 28),
+                      child: const Icon(Icons.person_rounded,
+                          color: AppColors.primaryBlue, size: 28),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -263,24 +419,34 @@ class ProfileScreen extends StatelessWidget {
                         children: [
                           const Text(
                             'Sober Champion',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.primaryBlue,
+                              letterSpacing: -0.3,
+                            ),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             'Quitting ${profile.habitName}',
-                            style: const TextStyle(fontSize: 13, color: AppColors.primaryLight),
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.accentCyan,
+                            ),
                           ),
                         ],
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.edit_outlined, color: AppColors.textSecondaryDark),
+                      icon: const Icon(Icons.edit_outlined,
+                          color: AppColors.slateMuted),
                       onPressed: () => _showEditProfileDialog(context),
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Divider(color: Colors.white10),
+                const Divider(color: AppColors.borderLightGray),
                 const SizedBox(height: 12),
 
                 // Motivation quote box
@@ -288,19 +454,20 @@ class ProfileScreen extends StatelessWidget {
                   'MY CORE "WHY"',
                   style: TextStyle(
                     fontSize: 11,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
-                    color: AppColors.textMutedDark,
+                    color: AppColors.slateMuted,
                   ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   '"${profile.reasonWhy}"',
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 14.5,
                     fontStyle: FontStyle.italic,
-                    color: Colors.white,
-                    height: 1.4,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primaryBlue,
+                    height: 1.45,
                   ),
                 ),
               ],
@@ -309,76 +476,166 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Settings list
-          Material(
-            color: AppColors.surfaceDark,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-              side: const BorderSide(color: AppColors.borderDark),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.tune_rounded, color: AppColors.primary),
-                  title: const Text('Tracker & Cost Preferences'),
-                  subtitle: Text('\$${profile.dailyCost.toStringAsFixed(0)}/day • ${profile.dailyHoursSaved.toStringAsFixed(1)} hrs/day'),
-                  trailing: const Icon(Icons.chevron_right_rounded),
-                  onTap: () => _showEditProfileDialog(context),
-                ),
-                const Divider(color: Colors.white10, height: 1),
-                ListTile(
-                  leading: const Icon(Icons.notifications_active_outlined, color: AppColors.secondary),
-                  title: const Text('Daily Morning Pledge Reminder'),
-                  subtitle: const Text('Scheduled for 8:00 AM daily'),
-                  trailing: Switch(
-                    value: true,
-                    onChanged: (val) {},
-                    activeThumbColor: AppColors.primary,
-                  ),
-                ),
-                const Divider(color: Colors.white10, height: 1),
-                ListTile(
-                  leading: const Icon(Icons.lock_outline_rounded, color: AppColors.accent),
-                  title: const Text('Privacy & Confidentiality'),
-                  subtitle: const Text('Data is stored offline on this device'),
-                  trailing: const Icon(Icons.chevron_right_rounded),
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        backgroundColor: AppColors.surfaceDark,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                        title: const Text('Privacy Promise'),
-                        content: const Text(
-                          'SoberOne stores your journal logs, check-ins, and sobriety dates securely on your local device. We respect your healing journey completely.',
-                        ),
-                        actions: [
-                          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Understood')),
-                        ],
-                      ),
-                    );
-                  },
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x060C3C60),
+                  blurRadius: 12,
+                  offset: Offset(0, 3),
                 ),
               ],
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Material(
+              color: AppColors.baseWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+                side: const BorderSide(
+                    color: AppColors.borderLightGray, width: 1.5),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.tune_rounded,
+                        color: AppColors.primaryBlue),
+                    title: const Text(
+                      'Tracker & Cost Preferences',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryBlue,
+                        fontSize: 15,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '\$${profile.dailyCost.toStringAsFixed(0)}/day • ${profile.dailyHoursSaved.toStringAsFixed(1)} hrs/day',
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        color: AppColors.slateMuted,
+                      ),
+                    ),
+                    trailing: const Icon(Icons.chevron_right_rounded,
+                        color: AppColors.slateMuted),
+                    onTap: () => _showEditProfileDialog(context),
+                  ),
+                  const Divider(color: AppColors.borderLightGray, height: 1),
+                  ListTile(
+                    leading: const Icon(Icons.notifications_active_outlined,
+                        color: AppColors.accentCyan),
+                    title: const Text(
+                      'Daily Morning Pledge Reminder',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryBlue,
+                        fontSize: 15,
+                      ),
+                    ),
+                    subtitle: const Text(
+                      'Scheduled for 8:00 AM daily',
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        color: AppColors.slateMuted,
+                      ),
+                    ),
+                    trailing: Switch(
+                      value: true,
+                      onChanged: (val) {},
+                      activeThumbColor: AppColors.primaryBlue,
+                      activeTrackColor:
+                          AppColors.accentCyan.withValues(alpha: 0.25),
+                    ),
+                  ),
+                  const Divider(color: AppColors.borderLightGray, height: 1),
+                  ListTile(
+                    leading: const Icon(Icons.lock_outline_rounded,
+                        color: AppColors.accentCyan),
+                    title: const Text(
+                      'Privacy & Confidentiality',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryBlue,
+                        fontSize: 15,
+                      ),
+                    ),
+                    subtitle: const Text(
+                      'Data is stored offline on this device',
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        color: AppColors.slateMuted,
+                      ),
+                    ),
+                    trailing: const Icon(Icons.chevron_right_rounded,
+                        color: AppColors.slateMuted),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          backgroundColor: AppColors.baseWhite,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: const BorderSide(
+                                color: AppColors.borderLightGray),
+                          ),
+                          title: const Text(
+                            'Privacy Promise',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.primaryBlue,
+                            ),
+                          ),
+                          content: const Text(
+                            'SoberOne stores your journal logs, check-ins, and sobriety dates securely on your local device. We respect your healing journey completely.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: AppColors.slateText,
+                              height: 1.45,
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(ctx),
+                              style: TextButton.styleFrom(
+                                  foregroundColor: AppColors.primaryBlue),
+                              child: const Text('Understood'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 24),
 
           // Reset streak button
           Material(
-            color: AppColors.surfaceDark,
+            color: const Color(0xFFFFF1F2),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
-              side: BorderSide(color: AppColors.danger.withAlpha(50)),
+              side: const BorderSide(color: Color(0xFFFDA4AF), width: 1.2),
             ),
             clipBehavior: Clip.antiAlias,
             child: ListTile(
-              leading: const Icon(Icons.restart_alt_rounded, color: AppColors.danger),
+              leading: const Icon(Icons.restart_alt_rounded,
+                  color: Color(0xFFE11D48)),
               title: const Text(
                 'Reset Sobriety Streak',
-                style: TextStyle(color: AppColors.danger, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Color(0xFFE11D48),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 15,
+                ),
               ),
-              subtitle: const Text('Had a slip? Reset guilt-free and start fresh.'),
+              subtitle: const Text(
+                'Had a slip? Reset guilt-free and start fresh.',
+                style: TextStyle(
+                  color: AppColors.slateMuted,
+                  fontSize: 12.5,
+                ),
+              ),
               onTap: () => _showResetConfirmation(context),
             ),
           ),
@@ -389,7 +646,11 @@ class ProfileScreen extends StatelessWidget {
             child: Text(
               'SoberOne v1.0.0 • Mobile Frontend\nCrafted with compassion for recovery',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12, color: AppColors.textMutedDark, height: 1.5),
+              style: TextStyle(
+                fontSize: 12,
+                color: AppColors.slateMuted,
+                height: 1.5,
+              ),
             ),
           ),
         ],

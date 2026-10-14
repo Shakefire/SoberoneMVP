@@ -21,16 +21,19 @@ class CounterCard extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF162544), Color(0xFF0F172A)],
+          colors: [Color(0xFF0C3C60), Color(0xFF06213A)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: AppColors.primary.withAlpha(50), width: 1.5),
+        border: Border.all(
+          color: AppColors.accentCyan.withValues(alpha: 0.3),
+          width: 1.5,
+        ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withAlpha(20),
-            blurRadius: 30,
+            color: const Color(0xFF0C3C60).withValues(alpha: 0.25),
+            blurRadius: 24,
             offset: const Offset(0, 10),
           ),
         ],
@@ -41,24 +44,26 @@ class CounterCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             decoration: BoxDecoration(
-              color: AppColors.primary.withAlpha(35),
+              color: AppColors.accentCyan.withValues(alpha: 0.18),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.primary.withAlpha(90)),
+              border: Border.all(
+                color: AppColors.accentCyan.withValues(alpha: 0.45),
+              ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(
                   Icons.verified_rounded,
-                  color: AppColors.primaryLight,
+                  color: AppColors.accentCyan,
                   size: 16,
                 ),
                 const SizedBox(width: 6),
                 Text(
                   'Free from ${profile.habitName}',
                   style: const TextStyle(
-                    color: AppColors.primaryLight,
-                    fontWeight: FontWeight.w600,
+                    color: Color(0xFFE0F7FA),
+                    fontWeight: FontWeight.w700,
                     fontSize: 13,
                   ),
                 ),
@@ -71,31 +76,32 @@ class CounterCard extends StatelessWidget {
           Text(
             '$days',
             style: const TextStyle(
-              fontSize: 72,
+              fontSize: 76,
               fontWeight: FontWeight.w900,
               color: Colors.white,
               letterSpacing: -2,
               height: 1.0,
             ),
           ),
+          const SizedBox(height: 6),
           const Text(
             'DAYS SOBER',
             style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textSecondaryDark,
-              letterSpacing: 2.0,
+              fontSize: 12.5,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF94A3B8),
+              letterSpacing: 2.5,
             ),
           ),
           const SizedBox(height: 24),
 
           // Hours, Minutes, Seconds ticker
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
             decoration: BoxDecoration(
-              color: AppColors.surfaceDark.withAlpha(120),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.borderDark),
+              color: Colors.white.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -125,7 +131,7 @@ class CounterCard extends StatelessWidget {
             'Started ${TimeFormatter.formatDateTime(profile.quitDate)}',
             style: const TextStyle(
               fontSize: 12,
-              color: AppColors.textMutedDark,
+              color: Color(0xFF94A3B8),
             ),
           ),
         ],
@@ -142,7 +148,7 @@ class CounterCard extends StatelessWidget {
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: highlight ? AppColors.primaryLight : Colors.white,
+            color: highlight ? AppColors.accentCyan : Colors.white,
             fontFeatures: const [FontFeature.tabularFigures()],
           ),
         ),
@@ -152,7 +158,7 @@ class CounterCard extends StatelessWidget {
           style: const TextStyle(
             fontSize: 10,
             fontWeight: FontWeight.w600,
-            color: AppColors.textMutedDark,
+            color: Color(0xFFCBD5E1),
             letterSpacing: 1.0,
           ),
         ),
@@ -164,7 +170,7 @@ class CounterCard extends StatelessWidget {
     return Container(
       width: 1,
       height: 24,
-      color: Colors.white12,
+      color: Colors.white24,
     );
   }
 }

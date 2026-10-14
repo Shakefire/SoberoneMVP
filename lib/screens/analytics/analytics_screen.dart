@@ -18,14 +18,29 @@ class AnalyticsScreen extends StatelessWidget {
     final elapsed = sobrietyProvider.profile.elapsedDuration;
     final entries = checkInProvider.entries;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Recovery Insights', style: TextStyle(fontWeight: FontWeight.bold)),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-        children: [
-          // 1. Top Stat Cards (Avg Craving & Total Check-ins)
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
+      children: [
+        // Section Header
+        const Text(
+          'Recovery Insights & Progress',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+            color: AppColors.primaryBlue,
+            letterSpacing: -0.4,
+          ),
+        ),
+        const SizedBox(height: 2),
+        const Text(
+          'Track your cravings, mood, and biological recovery timeline.',
+          style: TextStyle(
+            fontSize: 12.5,
+            color: AppColors.slateMuted,
+          ),
+        ),
+        const SizedBox(height: 16),
+        // 1. Top Stat Cards (Avg Craving & Total Check-ins)
           Row(
             children: [
               Expanded(
@@ -55,9 +70,16 @@ class AnalyticsScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppColors.surfaceDark,
+              color: AppColors.baseWhite,
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: AppColors.borderDark),
+              border: Border.all(color: AppColors.borderLightGray, width: 1.5),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x060C3C60),
+                  blurRadius: 12,
+                  offset: Offset(0, 3),
+                ),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,11 +89,20 @@ class AnalyticsScreen extends StatelessWidget {
                   children: [
                     Text(
                       'Craving Levels (Last 7 Days)',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.primaryBlue,
+                        letterSpacing: -0.3,
+                      ),
                     ),
                     Text(
                       '1 (Calm) - 10 (High)',
-                      style: TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: AppColors.slateMuted,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
@@ -79,7 +110,12 @@ class AnalyticsScreen extends StatelessWidget {
                 SizedBox(
                   height: 180,
                   child: entries.isEmpty
-                      ? const Center(child: Text('No check-in data yet'))
+                      ? const Center(
+                          child: Text(
+                            'No check-in data yet',
+                            style: TextStyle(color: AppColors.slateMuted),
+                          ),
+                        )
                       : _buildLineChart(entries),
                 ),
               ],
@@ -98,8 +134,7 @@ class AnalyticsScreen extends StatelessWidget {
           // 5. Recent Journal & Reflection Logs
           _buildCheckInHistory(entries),
         ],
-      ),
-    );
+      );
   }
 
   Widget _buildMetricCard({
@@ -112,9 +147,16 @@ class AnalyticsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
+        color: AppColors.baseWhite,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.borderDark),
+        border: Border.all(color: AppColors.borderLightGray, width: 1.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x060C3C60),
+            blurRadius: 12,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +169,7 @@ class AnalyticsScreen extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textSecondaryDark,
+                  color: AppColors.slateMuted,
                 ),
               ),
               Icon(icon, color: color, size: 20),
@@ -138,8 +180,8 @@ class AnalyticsScreen extends StatelessWidget {
             value,
             style: const TextStyle(
               fontSize: 26,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+              fontWeight: FontWeight.w900,
+              color: AppColors.primaryBlue,
             ),
           ),
           const SizedBox(height: 4),
@@ -147,7 +189,7 @@ class AnalyticsScreen extends StatelessWidget {
             subtitle,
             style: const TextStyle(
               fontSize: 11,
-              color: AppColors.textMutedDark,
+              color: AppColors.slateMuted,
             ),
           ),
         ],
@@ -174,7 +216,7 @@ class AnalyticsScreen extends StatelessWidget {
           drawVerticalLine: false,
           horizontalInterval: 2,
           getDrawingHorizontalLine: (value) => const FlLine(
-            color: Colors.white10,
+            color: Color(0xFFE2E8F0),
             strokeWidth: 1,
           ),
         ),
@@ -189,7 +231,11 @@ class AnalyticsScreen extends StatelessWidget {
               reservedSize: 28,
               getTitlesWidget: (value, meta) => Text(
                 '${value.toInt()}',
-                style: const TextStyle(color: AppColors.textMutedDark, fontSize: 11),
+                style: const TextStyle(
+                  color: AppColors.slateMuted,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -204,7 +250,11 @@ class AnalyticsScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 6),
                     child: Text(
                       'D${recent.length - index}',
-                      style: const TextStyle(color: AppColors.textSecondaryDark, fontSize: 11),
+                      style: const TextStyle(
+                        color: AppColors.slateMuted,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   );
                 }
@@ -223,24 +273,24 @@ class AnalyticsScreen extends StatelessWidget {
             spots: spots,
             isCurved: true,
             curveSmoothness: 0.35,
-            color: AppColors.primary,
-            barWidth: 3,
+            color: AppColors.accentCyan,
+            barWidth: 3.5,
             isStrokeCapRound: true,
             dotData: FlDotData(
               show: true,
               getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
-                radius: 4,
-                color: AppColors.primaryLight,
-                strokeWidth: 2,
-                strokeColor: AppColors.backgroundDark,
+                radius: 4.5,
+                color: AppColors.accentCyan,
+                strokeWidth: 2.5,
+                strokeColor: AppColors.baseWhite,
               ),
             ),
             belowBarData: BarAreaData(
               show: true,
               gradient: LinearGradient(
                 colors: [
-                  AppColors.primary.withAlpha(80),
-                  AppColors.primary.withAlpha(0),
+                  AppColors.accentCyan.withValues(alpha: 0.25),
+                  AppColors.accentCyan.withValues(alpha: 0.0),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -256,43 +306,66 @@ class AnalyticsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
+        color: AppColors.baseWhite,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.borderDark),
+        border: Border.all(color: AppColors.borderLightGray, width: 1.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x060C3C60),
+            blurRadius: 12,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'Frequent Craving Triggers',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w800,
+              color: AppColors.primaryBlue,
+              letterSpacing: -0.3,
+            ),
           ),
           const SizedBox(height: 6),
           const Text(
             'Knowing your triggers helps you prepare ahead.',
-            style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark),
+            style: TextStyle(fontSize: 12, color: AppColors.slateMuted),
           ),
           const SizedBox(height: 16),
           if (triggers.isEmpty)
-            const Text('No triggers logged yet. Keep going!', style: TextStyle(color: AppColors.textMutedDark))
+            const Text(
+              'No triggers logged yet. Keep going!',
+              style: TextStyle(color: AppColors.slateMuted),
+            )
           else
             Wrap(
               spacing: 8,
               runSpacing: 8,
               children: triggers.entries.map((entry) {
                 return Chip(
-                  backgroundColor: AppColors.surfaceDarkLight.withAlpha(60),
-                  side: const BorderSide(color: AppColors.borderDark),
+                  backgroundColor: AppColors.softSurfaceGray,
+                  side: const BorderSide(color: AppColors.borderLightGray),
                   avatar: CircleAvatar(
-                    backgroundColor: AppColors.secondary.withAlpha(40),
+                    backgroundColor: AppColors.accentCyan.withValues(alpha: 0.15),
                     child: Text(
                       '${entry.value}',
-                      style: const TextStyle(fontSize: 10, color: AppColors.secondary, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: AppColors.accentCyan,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   label: Text(
                     entry.key,
-                    style: const TextStyle(fontSize: 12, color: Colors.white),
+                    style: const TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryBlue,
+                    ),
                   ),
                 );
               }).toList(),
@@ -308,9 +381,16 @@ class AnalyticsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
+        color: AppColors.baseWhite,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.borderDark),
+        border: Border.all(color: AppColors.borderLightGray, width: 1.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x060C3C60),
+            blurRadius: 12,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -320,7 +400,12 @@ class AnalyticsScreen extends StatelessWidget {
             children: [
               Text(
                 'Biological Recovery Timeline',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.primaryBlue,
+                  letterSpacing: -0.3,
+                ),
               ),
               Icon(Icons.monitor_heart_rounded, color: AppColors.danger, size: 20),
             ],
@@ -328,7 +413,7 @@ class AnalyticsScreen extends StatelessWidget {
           const SizedBox(height: 6),
           const Text(
             'Physical regeneration milestones unlocked by your body.',
-            style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark),
+            style: TextStyle(fontSize: 12, color: AppColors.slateMuted),
           ),
           const SizedBox(height: 16),
           ...healthList.map((item) {
@@ -343,12 +428,19 @@ class AnalyticsScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: isDone ? AppColors.success.withAlpha(30) : AppColors.surfaceDarkLight.withAlpha(60),
+                      color: isDone
+                          ? const Color(0xFFECFDF5)
+                          : AppColors.softSurfaceGray,
                       shape: BoxShape.circle,
+                      border: Border.all(
+                        color: isDone
+                            ? const Color(0xFFA7F3D0)
+                            : AppColors.borderLightGray,
+                      ),
                     ),
                     child: Icon(
                       isDone ? Icons.check_circle_rounded : item.icon,
-                      color: isDone ? AppColors.success : AppColors.textMutedDark,
+                      color: isDone ? const Color(0xFF047857) : AppColors.slateMuted,
                       size: 18,
                     ),
                   ),
@@ -364,16 +456,20 @@ class AnalyticsScreen extends StatelessWidget {
                               item.title,
                               style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: isDone ? Colors.white : AppColors.textSecondaryDark,
+                                fontWeight: FontWeight.w800,
+                                color: isDone
+                                    ? AppColors.primaryBlue
+                                    : AppColors.slateMuted,
                               ),
                             ),
                             Text(
                               '${(progress * 100).toInt()}%',
                               style: TextStyle(
                                 fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: isDone ? AppColors.success : AppColors.textMutedDark,
+                                fontWeight: FontWeight.w700,
+                                color: isDone
+                                    ? const Color(0xFF047857)
+                                    : AppColors.slateMuted,
                               ),
                             ),
                           ],
@@ -381,17 +477,20 @@ class AnalyticsScreen extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           item.description,
-                          style: const TextStyle(fontSize: 12, color: AppColors.textMutedDark),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.slateMuted,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(4),
                           child: LinearProgressIndicator(
                             value: progress,
-                            minHeight: 4,
-                            backgroundColor: Colors.white10,
+                            minHeight: 5,
+                            backgroundColor: const Color(0xFFF1F5F9),
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              isDone ? AppColors.success : AppColors.primary,
+                              isDone ? const Color(0xFF059669) : AppColors.accentCyan,
                             ),
                           ),
                         ),
@@ -411,29 +510,44 @@ class AnalyticsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
+        color: AppColors.baseWhite,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.borderDark),
+        border: Border.all(color: AppColors.borderLightGray, width: 1.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x060C3C60),
+            blurRadius: 12,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'Journal & Check-in History',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w800,
+              color: AppColors.primaryBlue,
+              letterSpacing: -0.3,
+            ),
           ),
           const SizedBox(height: 14),
           if (entries.isEmpty)
-            const Text('No entries yet.', style: TextStyle(color: AppColors.textMutedDark))
+            const Text(
+              'No entries yet.',
+              style: TextStyle(color: AppColors.slateMuted),
+            )
           else
             ...entries.take(5).map((entry) {
               return Container(
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: AppColors.backgroundDark.withAlpha(120),
+                  color: AppColors.softSurfaceGray,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.borderDark),
+                  border: Border.all(color: AppColors.borderLightGray),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -443,17 +557,25 @@ class AnalyticsScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(entry.mood.emoji, style: const TextStyle(fontSize: 20)),
+                            Text(entry.mood.emoji,
+                                style: const TextStyle(fontSize: 20)),
                             const SizedBox(width: 8),
                             Text(
                               entry.mood.label,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 13.5,
+                                color: AppColors.primaryBlue,
+                              ),
                             ),
                           ],
                         ),
                         Text(
                           TimeFormatter.formatDate(entry.timestamp),
-                          style: const TextStyle(fontSize: 12, color: AppColors.textMutedDark),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.slateMuted,
+                          ),
                         ),
                       ],
                     ),
@@ -461,14 +583,23 @@ class AnalyticsScreen extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         entry.note,
-                        style: const TextStyle(fontSize: 13, color: AppColors.textSecondaryDark),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: AppColors.slateText,
+                          height: 1.4,
+                        ),
                       ),
                     ],
                     if (entry.gratitude.isNotEmpty) ...[
                       const SizedBox(height: 6),
                       Text(
                         '✨ ${entry.gratitude}',
-                        style: const TextStyle(fontSize: 12, color: AppColors.primaryLight, fontStyle: FontStyle.italic),
+                        style: const TextStyle(
+                          fontSize: 12.5,
+                          color: AppColors.accentCyan,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ],
                   ],

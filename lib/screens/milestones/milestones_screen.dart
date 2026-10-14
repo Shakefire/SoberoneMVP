@@ -26,20 +26,33 @@ class MilestonesScreen extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFF2C3E50), Color(0xFF1E272E)],
+                colors: [Color(0xFF0C3C60), Color(0xFF06213A)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: AppColors.warning.withAlpha(80)),
+              border: Border.all(
+                color: AppColors.accentCyan.withValues(alpha: 0.35),
+                width: 1.5,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF0C3C60).withValues(alpha: 0.25),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+              ],
             ),
             child: Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: AppColors.warning.withAlpha(35),
+                    color: AppColors.warning.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.warning.withValues(alpha: 0.5),
+                    ),
                   ),
                   child: const Icon(
                     Icons.emoji_events_rounded,
@@ -56,8 +69,9 @@ class MilestonesScreen extends StatelessWidget {
                         '$unlockedCount of ${milestones.length} Badges Claimed',
                         style: const TextStyle(
                           fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w800,
                           color: Colors.white,
+                          letterSpacing: -0.3,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -65,7 +79,7 @@ class MilestonesScreen extends StatelessWidget {
                         'Every single hour clean is proof of your courage.',
                         style: TextStyle(
                           fontSize: 12,
-                          color: AppColors.textSecondaryDark,
+                          color: Color(0xFFE2E8F0),
                         ),
                       ),
                     ],
@@ -85,21 +99,21 @@ class MilestonesScreen extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 14),
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
-                color: isUnlocked ? AppColors.surfaceDark : AppColors.surfaceDark.withAlpha(120),
+                color: AppColors.baseWhite,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: isUnlocked ? milestone.accentColor.withAlpha(100) : AppColors.borderDark,
-                  width: isUnlocked ? 1.5 : 1,
+                  color: isUnlocked
+                      ? AppColors.accentCyan
+                      : AppColors.borderLightGray,
+                  width: isUnlocked ? 1.8 : 1.2,
                 ),
-                boxShadow: isUnlocked
-                    ? [
-                        BoxShadow(
-                          color: milestone.accentColor.withAlpha(20),
-                          blurRadius: 16,
-                          offset: const Offset(0, 4),
-                        ),
-                      ]
-                    : null,
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x060C3C60),
+                    blurRadius: 12,
+                    offset: Offset(0, 3),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
@@ -109,17 +123,21 @@ class MilestonesScreen extends StatelessWidget {
                     height: 56,
                     decoration: BoxDecoration(
                       color: isUnlocked
-                          ? milestone.accentColor.withAlpha(35)
-                          : Colors.white.withAlpha(10),
+                          ? milestone.accentColor.withValues(alpha: 0.12)
+                          : AppColors.softSurfaceGray,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: isUnlocked ? milestone.accentColor : Colors.white12,
+                        color: isUnlocked
+                            ? milestone.accentColor.withValues(alpha: 0.5)
+                            : AppColors.borderLightGray,
                         width: 1.5,
                       ),
                     ),
                     child: Icon(
                       isUnlocked ? milestone.icon : Icons.lock_outline_rounded,
-                      color: isUnlocked ? milestone.accentColor : AppColors.textMutedDark,
+                      color: isUnlocked
+                          ? milestone.accentColor
+                          : AppColors.slateMuted,
                       size: 26,
                     ),
                   ),
@@ -137,23 +155,30 @@ class MilestonesScreen extends StatelessWidget {
                               milestone.title,
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: isUnlocked ? Colors.white : AppColors.textSecondaryDark,
+                                fontWeight: FontWeight.w800,
+                                color: isUnlocked
+                                    ? AppColors.primaryBlue
+                                    : AppColors.slateMuted,
+                                letterSpacing: -0.2,
                               ),
                             ),
                             if (isUnlocked)
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 9, vertical: 3),
                                 decoration: BoxDecoration(
-                                  color: AppColors.success.withAlpha(30),
+                                  color: const Color(0xFFECFDF5),
                                   borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: const Color(0xFFA7F3D0),
+                                  ),
                                 ),
                                 child: const Text(
                                   'Claimed',
                                   style: TextStyle(
-                                    color: AppColors.success,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF047857),
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               )
@@ -162,8 +187,8 @@ class MilestonesScreen extends StatelessWidget {
                                 '${(progress * 100).toInt()}%',
                                 style: const TextStyle(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.textMutedDark,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.slateMuted,
                                 ),
                               ),
                           ],
@@ -172,9 +197,9 @@ class MilestonesScreen extends StatelessWidget {
                         Text(
                           milestone.description,
                           style: const TextStyle(
-                            fontSize: 12,
-                            color: AppColors.textMutedDark,
-                            height: 1.3,
+                            fontSize: 12.5,
+                            color: AppColors.slateMuted,
+                            height: 1.35,
                           ),
                         ),
                         if (!isUnlocked) ...[
@@ -184,8 +209,10 @@ class MilestonesScreen extends StatelessWidget {
                             child: LinearProgressIndicator(
                               value: progress,
                               minHeight: 5,
-                              backgroundColor: Colors.white10,
-                              valueColor: AlwaysStoppedAnimation<Color>(milestone.accentColor),
+                              backgroundColor: const Color(0xFFF1F5F9),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                milestone.accentColor,
+                              ),
                             ),
                           ),
                         ],
